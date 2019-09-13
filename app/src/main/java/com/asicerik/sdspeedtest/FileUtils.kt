@@ -1,6 +1,7 @@
 package com.asicerik.sdspeedtest
 
 import android.os.Environment
+import android.os.StatFs
 import java.io.File
 import java.nio.file.Paths
 
@@ -20,6 +21,24 @@ class FileUtils {
 
     fun isExternalStorageWritable(): Boolean {
         return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+    }
+
+    val internalStorageSizeGB: Double
+        get() {
+        val path = Environment.getDataDirectory()
+        val stat = StatFs(path.path)
+        val blockSize = stat.blockSizeLong
+        val totalBlocks = stat.blockCountLong
+        return (totalBlocks * blockSize)/1_000_000_000.0
+    }
+
+    val externalStorageSizeGB: Double
+        get() {
+        val path = Environment.getExternalStorageDirectory()
+        val stat = StatFs(path.path)
+        val blockSize = stat.blockSizeLong
+        val totalBlocks = stat.blockCountLong
+        return (totalBlocks * blockSize)/1_000_000_000.0
     }
 
     fun createTestFile(rootFolder: String): File {

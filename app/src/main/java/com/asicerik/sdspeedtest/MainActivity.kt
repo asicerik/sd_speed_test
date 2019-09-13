@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun init() {
         textViewStatus.text = "Initializing..."
+        textViewLeft.text = String.format("External Storage %3.1f GB", fileUtils.externalStorageSizeGB)
+        textViewRight.text = String.format("Internal Storage %3.1f GB", fileUtils.internalStorageSizeGB)
         runAll()
     }
 
